@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>전공책 · 자격증 교재 팝니다</title>
-<meta name="description" content="대학 전공서적과 자격증 교재를 정리해서 판매합니다. 직거래/택배 가능, 일괄 구매 환영." />
+<meta name="description" content="대학 전공서적과 자격증 교재를 정리해서 판매합니다. 직거래만 가능(학교·신부동·구성동), 일괄 구매 환영." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -218,10 +218,10 @@
 <footer>
   <div class="wrap foot-in">
     <h3>한 권이든 여러 권이든 환영이에요</h3>
-    <p>일괄 구매하시면 가격 더 조정해 드려요. 직거래(학교/근처)와 택배 모두 가능합니다. 가격·상태 궁금한 점은 부담 없이 물어봐 주세요.</p>
+    <p>일괄 구매하시면 가격 더 조정해 드려요. 직거래만 가능하며, 거래 장소는 학교·신부동·구성동입니다. 가격·상태 궁금한 점은 부담 없이 물어봐 주세요.</p>
     <div class="deal">
-      <span class="chip"><span class="dot"></span>직거래 가능</span>
-      <span class="chip"><span class="dot"></span>택배 가능</span>
+      <span class="chip"><span class="dot"></span>직거래만 가능</span>
+      <span class="chip"><span class="dot"></span>학교 · 신부동 · 구성동</span>
       <span class="chip"><span class="dot"></span>일괄 구매 할인</span>
     </div>
     <a class="kakao" href="https://open.kakao.com/o/sQMFcati" target="_blank" rel="noopener" style="margin-top:6px">
@@ -304,7 +304,7 @@
     const total = CATS.reduce((s,c)=>s+c.books.length,0);
     document.getElementById("metaRow").innerHTML = `
       <span class="chip"><b>${total}</b>건 판매 중</span>
-      <span class="chip"><span class="dot"></span>직거래 / 택배</span>
+      <span class="chip"><span class="dot"></span>직거래만 가능 · 학교 · 신부동 · 구성동</span>
       <span class="chip"><span class="dot"></span>일괄 구매 환영</span>`;
     document.getElementById("navJump").innerHTML = CATS.map(c=>
       `<a href="#${c.id}">${c.name} <span>${c.books.length}</span></a>`).join("");
