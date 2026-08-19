@@ -1,4 +1,4 @@
-"""책 사진 27장을 웹용으로 최적화한다.
+"""책 사진을 웹용으로 최적화한다.
 원본(KakaoTalk_*.jpg)은 건드리지 않고 site/img, site/img/thumb 에 압축본 생성.
 - 풀사이즈(라이트박스용): 긴 변 1400px, JPEG q82
 - 썸네일(카드용): 긴 변 760px, JPEG q80
@@ -6,6 +6,7 @@
 """
 import os
 import glob
+import argparse
 from PIL import Image, ImageOps
 
 HERE = os.path.dirname(os.path.abspath(__file__))      # 이 스크립트가 있는 폴더(docs)
@@ -14,9 +15,6 @@ OUT_DIR = os.path.join(HERE, "img")
 THUMB_DIR = os.path.join(OUT_DIR, "thumb")
 os.makedirs(OUT_DIR, exist_ok=True)
 os.makedirs(THUMB_DIR, exist_ok=True)
-
-srcs = sorted(glob.glob(os.path.join(SRC_DIR, "KakaoTalk_*.jpg")))
-print(f"source images: {len(srcs)}")
 
 # 누워서 찍힌 책을 세로로 세우기 위한 회전(양수=반시계 CCW). 0/미지정은 그대로.
 ROT = {
@@ -31,11 +29,22 @@ ROT = {
     17: 90, 18: 90,     # 인적자원 (뒤, 앞)
     19: 90, 20: 90,     # 수업설계 (뒤, 앞)
     21: 90, 22: 90,     # 시나공 (스프링 2장)
+    27: 270, 28: 0,     # Unlock, Essential Reading
+    29: 90, 30: 0,      # 빅데이터분석기사, 한능검
 }
+
+parser = argparse.ArgumentParser(description="책 사진을 웹용으로 최적화합니다.")
+parser.add_argument("sources", nargs="*", help="처리할 사진 경로 (생략 시 기존 카카오톡 사진 전체)")
+parser.add_argument("--start", type=int, default=0, help="출력 사진의 시작 번호")
+args = parser.parse_args()
+
+srcs = args.sources or sorted(glob.glob(os.path.join(SRC_DIR, "KakaoTalk_*.jpg")))
+print(f"source images: {len(srcs)}")
 
 total_before = 0
 total_after = 0
-for idx, path in enumerate(srcs):
+for offset, path in enumerate(srcs):
+    idx = args.start + offset
     total_before += os.path.getsize(path)
     name = f"p{idx:02d}.jpg"
     with Image.open(path) as im:

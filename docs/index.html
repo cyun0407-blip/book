@@ -260,34 +260,43 @@
   // ── 책 데이터 (가격/상태는 자유롭게 수정하세요) ───────────────
   const CATS = [
     { id:"major", name:"전공 교재", sub:"컴퓨터공학 · 물리학", books:[
-      {t:"일반물리학실험", by:"김광철·황운하 · 북스힐", list:null, price:5000, cond:"good", photos:["p00"]},
-      {t:"대학물리학 Ⅰ·Ⅱ 세트", by:"Serway·Jewett (10판) · 북스힐", list:48000, price:24000, cond:"clean", note:"전 2권 세트", photos:["p02","p01"],
+      {t:"일반물리학실험", by:"김광철·황운하 · 북스힐", list:null, price:2000, cond:"used", note:"실험표 1장 뜯음", photos:["p00"]},
+      {t:"대학물리학 Ⅰ·Ⅱ 세트", by:"Serway·Jewett (10판) · 북스힐", list:50000, price:14000, cond:"clean", note:"전 2권 세트 · 깨끗", photos:["p02","p01"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000001784518", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=187481108" }},
-      {t:"데이터 과학을 위한 기초수학", by:"이병준 · 한빛아카데미", list:26000, price:13000, cond:"clean", note:"with 파이썬", photos:["p04","p03"],
+      {t:"데이터 과학을 위한 기초수학", by:"이병준 · 한빛아카데미", list:26000, price:6000, cond:"used", note:"with 파이썬 · 문제풀이 필기", photos:["p04","p03"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000001743792", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=258413933" }},
-      {t:"파이썬으로 쉽게 배우는 자료구조", by:"천인국·최영규 · 생능출판 (개정판)", list:29000, price:15000, cond:"new", photos:["p06","p05"],
+      {t:"파이썬으로 쉽게 배우는 자료구조", by:"천인국·최영규 · 생능출판 (개정판)", list:29000, price:9000, cond:"clean", note:"깨끗", photos:["p06","p05"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000202666213", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=318773360" }},
-      {t:"객체지향 중심 자바 프로그래밍", by:"김상진 · 도서출판 그린", list:28000, price:14000, cond:"clean", photos:["p08","p07"],
+      {t:"객체지향 중심 자바 프로그래밍", by:"김상진 · 도서출판 그린", list:28000, price:10000, cond:"clean", note:"깨끗", photos:["p08","p07"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000208716607", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=323735992" }},
-      {t:"쉽게 풀어쓴 C언어 Express", by:"천인국 · 생능출판 (개정3판)", list:30000, price:13000, cond:"used", photos:["p10","p09"],
+      {t:"쉽게 풀어쓴 C언어 Express", by:"천인국 · 생능출판 (개정3판)", list:30000, price:5000, cond:"clean", note:"깨끗", photos:["p10","p09"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000001076335", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=163484681" }},
-      {t:"초보자를 위한 파이썬 200제", by:"장삼용 · 정보문화사", list:20000, price:4000, cond:"clean", note:"구판(절판) · 가격 저렴", photos:["p12","p11"],
+      {t:"초보자를 위한 파이썬 200제", by:"장삼용 · 정보문화사", list:20000, price:3000, cond:"clean", note:"깨끗", photos:["p12","p11"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000000833178", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=103537390" }},
-      {t:"윤성우의 열혈 자료구조", by:"윤성우 · 오렌지미디어", list:25000, price:12000, cond:"clean", photos:["p14","p13"],
-        buy:{ new:"https://product.kyobobook.co.kr/detail/S000001589149", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=14783463" }},
-      {t:"컴퓨팅 사고: 소프트웨어를 통한 문제해결", by:"Riley·Hunt / 문봉교·김응성 역 · 인피니티북스", list:23000, price:10000, cond:"clean", photos:["p16","p15"],
+      {t:"윤성우의 열혈 C 프로그래밍", by:"윤성우 · 오렌지미디어", list:25000, price:5000, cond:"clean", note:"깨끗", photos:["p14","p13"]},
+      {t:"컴퓨팅 사고: 소프트웨어를 통한 문제해결", by:"Riley·Hunt / 문봉교·김응성 역 · 인피니티북스", list:23000, price:6000, cond:"clean", note:"깨끗", photos:["p16","p15"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000001870543", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=100382172" }},
     ]},
-    { id:"cert", name:"자격증 교재", sub:"정보처리기사 · SQLD · ADsP", books:[
-      {t:"2026 시나공 정보처리기사 필기 세트", by:"길벗", list:58000, price:29000, cond:"used", note:"기본서 2권 + 기출문제집 1권 (총 3권)", photos:["p21","p22"],
+    { id:"cert", name:"자격증 교재", sub:"정보처리기사 · 빅분기 · 한능검 · SQLD · ADsP", books:[
+      {t:"2026 시나공 정보처리기사 필기 세트", by:"길벗", list:58000, price:18000, cond:"clean", note:"기본서 2권 + 기출문제집 1권 (총 3권) · 깨끗", photos:["p21","p22"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000218197628", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=374613969" }},
-      {t:"2025 유선배 SQL개발자(SQLD) 과외노트", by:"정미나 · 시대에듀", list:24000, price:12000, cond:"clean", photos:["p24","p23"],
+      {t:"2026 이기적 빅데이터분석기사 필기 기본서", by:"나홍석 외 · 영진닷컴", list:33000, price:10000, cond:"good", note:"이론서 + 기출공략집 · 기출에 샤프 필기 조금", photos:["p29"],
+        buy:{ new:"https://www.yes24.com/product/goods/150110125" }},
+      {t:"2026 에듀윌 한국사능력검정시험 심화", by:"패스바이위드윌 · 에듀윌", list:23000, price:10000, cond:"clean", note:"만점자 필기노트로 2주끝장 · 모의고사 2회분 + 무료특강 · 깨끗", photos:["p30"],
+        buy:{ new:"https://book.eduwill.net/goods/list.action?SubClassCode=100112" }},
+      {t:"2025 유선배 SQL개발자(SQLD) 과외노트", by:"정미나 · 시대에듀", list:24000, price:6000, cond:"clean", note:"깨끗", photos:["p24","p23"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000214793236", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=352721391" }},
-      {t:"2025 ADsP 데이터 분석 준전문가", by:"윤종식 · 데이터에듀", list:31000, price:17000, cond:"clean", photos:["p26","p25"],
+      {t:"2025 ADsP 데이터 분석 준전문가", by:"윤종식 · 데이터에듀", list:31000, price:6000, cond:"good", note:"샤프 문제풀이", photos:["p26","p25"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000216251095", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=361993381" }},
     ]},
+    { id:"english", name:"어학 교재", sub:"대학교 영어 교재", books:[
+      {t:"Unlock 3 Listening, Speaking & Critical Thinking", by:"Sabina Ostrowska·Nancy Jordan·Chris Sowton · Cambridge", list:27000, price:5000, cond:"good", note:"필기 조금", photos:["p28"],
+        buy:{ new:"https://www.yes24.com/product/goods/63821476" }},
+      {t:"Essential Reading 3 Student Book", by:"Scott Miles · Macmillan Education", list:18000, price:5000, cond:"clean", note:"필기 없음", photos:["p27"],
+        buy:{ new:"https://www.yes24.com/product/goods/65487120" }},
+    ]},
     { id:"liberal", name:"교양 교재", sub:"교직 · 인적자원", books:[
-      {t:"인적자원개발의 기초 (제3판)", by:"임세영 · 박영사", list:12000, price:5000, cond:"clean", photos:["p18","p17"],
+      {t:"인적자원개발의 기초 (제3판)", by:"임세영 · 박영사", list:12000, price:4000, cond:"clean", note:"깨끗", photos:["p18","p17"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000001681087", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ISBN=9791130309637" }},
       {t:"수업설계: 교수·학습지도안 개발 (제3판)", by:"윤관식 · 양서원", list:18000, price:9000, cond:"good", sold:true, photos:["p20","p19"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000001641676", used:"https://www.aladin.co.kr/shop/wproduct.aspx?itemid=235462745" }},
@@ -374,7 +383,7 @@
       <div class="lb-tip">카카오톡 오픈채팅으로 연결돼요. 책 제목 말씀해 주시면 빠르게 답해드려요.</div>`}
       ${b.buy&&b.buy.new?`<div class="lb-links-label">정가 확인</div>
       <div class="lb-links">
-        <a class="ext ext-new" href="${b.buy.new}" target="_blank" rel="noopener">교보문고에서 보기<em>↗</em></a>
+        <a class="ext ext-new" href="${b.buy.new}" target="_blank" rel="noopener">새 책 정보 보기<em>↗</em></a>
       </div>`:""}`;
     lb.classList.add("open"); document.body.style.overflow="hidden";
     document.getElementById("lbCard").scrollTop=0;
