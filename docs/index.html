@@ -110,6 +110,10 @@
   .ph{position:relative;aspect-ratio:3/4;background:var(--paper-2);overflow:hidden}
   .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
   .card:hover .ph img{transform:scale(1.045)}
+  .card.sold{cursor:default}
+  .card.sold:hover{transform:none;box-shadow:var(--shadow);border-color:var(--line-soft)}
+  .card.sold:hover .ph img{transform:none}
+  .sold-overlay{position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(30,26,22,.58);color:#fff;font-family:'Gowun Batang',serif;font-size:24px;font-weight:700;letter-spacing:.08em;text-shadow:0 2px 8px rgba(0,0,0,.5)}
   .badge{
     position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;gap:6px;
     font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px);
@@ -157,6 +161,9 @@
   .lb-x:hover{transform:rotate(90deg)}
   .lb-imgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px;background:var(--paper-2);padding:4px}
   .lb-imgs img{width:100%;height:100%;max-height:62vh;object-fit:contain;background:var(--paper-2)}
+  .lb-imgs.sold{position:relative}
+  .lb-imgs.sold img{filter:brightness(.45)}
+  .lb-sold-overlay{position:absolute;inset:4px;z-index:1;display:grid;place-items:center;color:#fff;font-family:'Gowun Batang',serif;font-size:clamp(26px,5vw,44px);font-weight:700;letter-spacing:.1em;text-shadow:0 2px 12px rgba(0,0,0,.6);pointer-events:none}
   .lb-info{padding:22px 26px 28px}
   .lb-info .title{font-size:24px;line-height:1.25}
   .lb-info .by{font-size:14px;margin-top:8px}
@@ -282,7 +289,7 @@
     { id:"liberal", name:"교양 교재", sub:"교직 · 인적자원", books:[
       {t:"인적자원개발의 기초 (제3판)", by:"임세영 · 박영사", list:12000, price:5000, cond:"clean", photos:["p18","p17"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000001681087", used:"https://www.aladin.co.kr/shop/wproduct.aspx?ISBN=9791130309637" }},
-      {t:"수업설계: 교수·학습지도안 개발 (제3판)", by:"윤관식 · 양서원", list:18000, price:9000, cond:"good", photos:["p20","p19"],
+      {t:"수업설계: 교수·학습지도안 개발 (제3판)", by:"윤관식 · 양서원", list:18000, price:9000, cond:"good", sold:true, photos:["p20","p19"],
         buy:{ new:"https://product.kyobobook.co.kr/detail/S000001641676", used:"https://www.aladin.co.kr/shop/wproduct.aspx?itemid=235462745" }},
     ]},
   ];
@@ -291,6 +298,7 @@
   const off = (list,price) => list ? Math.round((1 - price/list)*100) : null;
 
   function priceHTML(b, big){
+    if(b.sold) return "";
     const o = off(b.list,b.price);
     return `<div class="${big?'lb-price':'price'}">
       <span class="now">${won(b.price)}</span>
@@ -301,7 +309,7 @@
 
   function render(){
     // hero meta
-    const total = CATS.reduce((s,c)=>s+c.books.length,0);
+    const total = CATS.reduce((s,c)=>s+c.books.filter(b=>!b.sold).length,0);
     document.getElementById("metaRow").innerHTML = `
       <span class="chip"><b>${total}</b>건 판매 중</span>
       <span class="chip"><span class="dot"></span>직거래만 가능 · 학교 · 신부동 · 구성동</span>
@@ -321,10 +329,10 @@
           ${c.books.map((b,i)=>{
             const ci=COND[b.cond];
             const gi = `${c.id}:${i}`;
-            return `<article class="card" data-k="${gi}" style="animation-delay:${(d++*45)}ms">
+            return `<article class="card${b.sold?' sold':''}" data-k="${gi}" style="animation-delay:${(d++*45)}ms">
               <div class="ph">
                 <img src="${THUMB}${b.photos[0]}.jpg" alt="${b.t}" loading="lazy" />
-                <span class="badge ${ci.cls}"><span class="d"></span>${ci.label}</span>
+                ${b.sold?`<span class="sold-overlay">판매완료</span>`:`<span class="badge ${ci.cls}"><span class="d"></span>${ci.label}</span>`}
                 ${b.photos.length>1?`<span class="multi">사진 ${b.photos.length}장 ＋</span>`:""}
               </div>
               <div class="body">
@@ -350,19 +358,20 @@
   const lb=document.getElementById("lb");
   function openLB(b){
     document.getElementById("lbImgs").innerHTML = b.photos.map(p=>
-      `<img src="${IMG}${p}.jpg" alt="${b.t}" />`).join("");
+      `<img src="${IMG}${p}.jpg" alt="${b.t}" />`).join("") + (b.sold?`<span class="lb-sold-overlay">판매완료</span>`:"");
+    document.getElementById("lbImgs").classList.toggle("sold",!!b.sold);
     const ci=COND[b.cond], o=off(b.list,b.price);
     document.getElementById("lbInfo").innerHTML = `
-      <span class="badge ${ci.cls}" style="position:static;margin-bottom:12px"><span class="d"></span>${ci.label}</span>
+      <span class="badge ${ci.cls}" style="position:static;margin-bottom:12px"><span class="d"></span>${b.sold?"판매완료":ci.label}</span>
       <div class="title">${b.t}</div>
       <div class="by">${b.by}</div>
       ${b.note?`<div class="note">${b.note}</div>`:""}
       ${priceHTML(b,true)}
-      <a class="lb-cta" href="${KAKAO}" target="_blank" rel="noopener">
+      ${b.sold?"":`<a class="lb-cta" href="${KAKAO}" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7-.2.7-.7 2.6-.8 3-.1.5.2.5.4.4.2-.1 2.6-1.8 3.7-2.5.6.1 1.3.1 2 .1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>
         이 책 문의하기
       </a>
-      <div class="lb-tip">카카오톡 오픈채팅으로 연결돼요. 책 제목 말씀해 주시면 빠르게 답해드려요.</div>
+      <div class="lb-tip">카카오톡 오픈채팅으로 연결돼요. 책 제목 말씀해 주시면 빠르게 답해드려요.</div>`}
       ${b.buy&&b.buy.new?`<div class="lb-links-label">정가 확인</div>
       <div class="lb-links">
         <a class="ext ext-new" href="${b.buy.new}" target="_blank" rel="noopener">교보문고에서 보기<em>↗</em></a>
